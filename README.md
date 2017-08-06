@@ -1,0 +1,2 @@
+# LegionWar
+Qt lua game
