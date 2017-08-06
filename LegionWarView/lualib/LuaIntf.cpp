@@ -36,21 +36,23 @@ void LuaIntf::loadScript()
     m_context = luaL_newstate();
     luaL_openlibs(m_context);
     loadGlobalConfig();
-    luaL_loadfile(m_context, "./assets/Lua/main.lua");
+    string buff = "print (\"Hello world!\")";  //执行内存脚本
+//    luaL_loadbuffer(m_context, buff.c_str(), buff.length(), "line");
+//    lua_pcall(m_context, 0, 0, 0);
+    luaL_loadfile(m_context, "./../assets/Lua/main.lua");
     int ret = lua_pcall(m_context, 0, 0, 0);
 
     if ( ret != 0 )
     {
         const char* err = lua_tostring(m_context, -1);
         qDebug() << "Error: " << err;
-        assert(false);
         lua_pop(m_context, 1);
     }
 }
 
 bool LuaIntf::loadGlobalConfig()
 {
-    luaL_requiref(m_context, "config", luaopen_config,1);
+    luaL_requiref(m_context, "config", luaopen_config, 1);
     return true;
 }
 
@@ -72,13 +74,14 @@ bool LuaIntf::notificationScriptMsg(int n_msg_id, char *s_msg_data)
     return true;
 }
 
-bool LuaIntf::notificationScriptEvent(int n_event_type)
+bool LuaIntf::notificationScriptEvent(int n_event_type, const char* data)
 {
     lua_getglobal(m_context, "main");
     lua_pushstring(m_context, "event");
     lua_pushnumber(m_context, getCurrTime());
     lua_pushnumber(m_context, n_event_type);
-    int ret = lua_pcall(m_context, 3, 1, 0);
+    lua_pushstring(m_context, data);
+    int ret = lua_pcall(m_context, 4, 1, 0);
     if ( ret != 0 )
     {
         const char* err = lua_tostring(m_context, -1);
@@ -90,13 +93,14 @@ bool LuaIntf::notificationScriptEvent(int n_event_type)
 }
 
 
-bool LuaIntf::notiicationScriptUi(char *s_action)
+bool LuaIntf::notiicationScriptUi(char *s_action, const char *data)
 {
     lua_getglobal(m_context, "main");
     lua_pushstring(m_context, "UI");
     lua_pushnumber(m_context, getCurrTime());
     lua_pushstring(m_context, s_action);
-    int ret = lua_pcall(m_context, 3, 1, 0);
+    lua_pushstring(m_context, data);
+    int ret = lua_pcall(m_context, 4, 1, 0);
     if ( ret != 0 )
     {
         const char* err = lua_tostring(m_context, -1);
@@ -114,3 +118,4 @@ qint64 LuaIntf::getCurrTime()
     n_currtime = n_currtime*1000 + timer.msec();
     return n_currtime;
 }
+

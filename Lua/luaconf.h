@@ -43,6 +43,7 @@
 */
 /* #define LUA_USE_C89 */
 
+//#define LUA_BUILD_AS_DLL
 
 /*
 ** By default, Lua on Windows use (some) specific Windows features

@@ -1,7 +1,8 @@
 local print     = print
 local config    = require "config"
-package.path = "./assets/Lua/?.lua";
+package.path = "./../assets/Lua/?.lua";
 
+local b_test = true
 local event_mgr = require "Event.event_mgr"
 local ui_mgr    = require "UI.ui_mgr"
 local game_mgr = require "game_mgr"
@@ -9,6 +10,10 @@ local g_events = require "config.events"
 
 local function init()
     config.register_event_cfg(g_events)
+end
+
+local function test()
+    require "tests.test_json"
 end
 
 local function dispatch(mode, ...)
@@ -33,3 +38,4 @@ function main(mode, n_curr_time, ...)
 end
 
 init()
+test()

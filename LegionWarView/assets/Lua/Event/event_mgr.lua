@@ -1,11 +1,16 @@
 local assert = assert
 local event_mgr = {}
 local events_func = {}
+local json = require "cjson"
 
-function event_mgr.dispatch(n_event_type, ...)
+function event_mgr.dispatch(n_event_type, s_data)
+    local param
+    if s_data ~= "" then
+        param = json.decode(s_data)
+    end
     local EVENT_FUNC = events_func[n_event_type]
     assert(EVENT_FUNC)
-    return EVENT_FUNC(...)
+    return EVENT_FUNC(param)
 end
 
 function event_mgr.register_event(n_event_type, EVENT_FUNC)

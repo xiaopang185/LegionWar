@@ -1,14 +1,15 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2017-08-03T00:28:09
+# Project created by QtCreator 2017-08-06T20:54:33
 #
 #-------------------------------------------------
 
-QT       -= core gui
+QT       -= core
 
-TARGET = Lua
+TARGET = lua
 TEMPLATE = lib
-CONFIG += staticlib
+
+DEFINES += LUA_LIBRARY
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked as deprecated (the exact warnings
@@ -51,8 +52,6 @@ SOURCES += \
     ltable.c \
     ltablib.c \
     ltm.c \
-    lua.c \
-    luac.c \
     lundump.c \
     lutf8lib.c \
     lvm.c \
@@ -85,9 +84,11 @@ HEADERS += \
     lundump.h \
     lvm.h \
     lzio.h
+
 unix {
     target.path = /usr/lib
     INSTALLS += target
 }
 
-DESTDIR += $$PWD/../bin/lib
+DESTDIR += $$PWD/../../Bin/lib
+

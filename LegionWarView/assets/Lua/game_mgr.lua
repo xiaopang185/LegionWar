@@ -7,8 +7,8 @@ local game_mgr  =
     n_curr_time     = 0,
 }
 
-function game_mgr.init_game()
-
+function game_mgr.init_game(param)
+    print(table.unpack(param))
 end
 
 function game_mgr.world_time_update(passtime)

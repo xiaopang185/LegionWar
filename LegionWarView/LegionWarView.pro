@@ -46,7 +46,7 @@ macx {
     ICON = macx/app_icon.icns
 }
 
-LIBS += $$PWD/../bin/lib/liblua.a
+LIBS += $$PWD/../../Bin/lib/libLua.a
 
 INCLUDEPATH += $$PWD/../lua\
             common\
